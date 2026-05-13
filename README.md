@@ -41,10 +41,14 @@ npm install
 #    - 番組名 / プラットフォーム URL / 配色 などを設定
 $EDITOR podcast.config.json
 
-# 5. ローカル開発
+# 5. アートカバーから OGP 画像 / favicon を生成 (src/static/ に配置)
+npm run assets
+#    → site.ogImage は <デプロイ先URL>/ogp.png に書き換える
+
+# 6. ローカル開発
 npm run dev      # → http://localhost:8788
 
-# 6. デプロイ
+# 7. デプロイ
 npm run deploy   # Cloudflare Pages にデプロイ
 ```
 
