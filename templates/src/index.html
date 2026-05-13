@@ -65,6 +65,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.214c3.809-.87 7.076-.496 9.712 1.114a.623.623 0 01.207.857zm1.224-2.719a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.234 1.328a.78.78 0 01.256 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.936.936 0 11-.543-1.791c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.954 1.613z"/></svg>
               {{platforms.spotify.label}}
             </a>
+            <span id="hero-rss"></span>
           </div>
 
           <!-- SNS Links -->
@@ -99,6 +100,7 @@
       calendar: '<svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clip-rule="evenodd"/></svg>',
       back: '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd"/></svg>',
       x: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+      rss: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 012.18 2.18C8.36 19 7.38 20 6.18 20A2.18 2.18 0 014 17.82a2.18 2.18 0 012.18-2.18zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93z"/></svg>',
     };
 
     let cachedData = null;
@@ -160,6 +162,44 @@
       }
       document.getElementById("hero-description").textContent = show.description;
       document.getElementById("hero-meta").textContent = `${CONFIG.i18n.byPrefix} ${show.author} · ${meta.totalEpisodes} ${CONFIG.i18n.episodesUnit}`;
+    }
+
+    function renderRssButton() {
+      const container = document.getElementById("hero-rss");
+      const rss = CONFIG.platforms?.rss;
+      if (!container || !rss || rss.enabled === false || !rss.url) return;
+      const label = rss.label || "RSS";
+      container.innerHTML = `
+        <a href="${escapeHtml(rss.url)}" target="_blank" rel="noopener noreferrer"
+           class="platform-btn platform-btn-rss" data-rss-copy
+           aria-label="${escapeHtml(label)}" title="${escapeHtml(rss.url)}">
+          ${SVG.rss}
+          <span class="platform-btn-label">${escapeHtml(label)}</span>
+        </a>`;
+    }
+
+    async function handleRssCopy(e) {
+      const btn = e.target.closest("[data-rss-copy]");
+      if (!btn) return;
+      e.preventDefault();
+      const url = btn.getAttribute("href");
+      const labelEl = btn.querySelector(".platform-btn-label");
+      if (!labelEl || btn.dataset.copying === "1") return;
+      const original = labelEl.textContent;
+      btn.dataset.copying = "1";
+      try {
+        await navigator.clipboard.writeText(url);
+        labelEl.textContent = CONFIG.i18n?.rssCopied || "Copied!";
+        btn.classList.add("is-copied");
+      } catch (err) {
+        console.error(err);
+        labelEl.textContent = CONFIG.i18n?.rssCopyFailed || "Copy failed";
+      }
+      setTimeout(() => {
+        labelEl.textContent = original;
+        btn.classList.remove("is-copied");
+        delete btn.dataset.copying;
+      }, 1500);
     }
 
     function renderSocialLinks() {
@@ -354,7 +394,10 @@
 
     window.addEventListener("popstate", () => render());
 
+    document.addEventListener("click", handleRssCopy);
+
     document.getElementById("footer-year").textContent = new Date().getFullYear();
+    renderRssButton();
     renderSocialLinks();
     renderFooterLinks();
     render();

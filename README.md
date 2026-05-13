@@ -86,6 +86,7 @@ favicon は config 編集不要。`site.ogImage` だけ自分のデプロイ先 
 | `site` | 番組名 / 説明文 / OGP 画像 / `lang` / favicon パス |
 | `api.url` | エピソード一覧 JSON を返す API エンドポイント (※自分でホストする。[crosspod](https://github.com/henteko/crosspod) を推奨) |
 | `platforms.apple` / `platforms.spotify` | プラットフォーム URL とラベル |
+| `platforms.rss` | RSS フィード URL とラベル。Hero に「クリックで URL をコピー」ボタンとして表示される。不要なら `enabled: false` で非表示 |
 | `social[]` | Hero / Footer に出す SNS リンク。`icon` は HTML テンプレ内 `SVG` 辞書のキー (現状は `x` を同梱) |
 | `theme` | 配色 (10 種) / フォント (3 種) / Google Fonts URL |
 | `i18n` | 文言 + 日付フォーマット。`"ja"` で日本語表記、それ以外は `toLocaleDateString` 経由 |

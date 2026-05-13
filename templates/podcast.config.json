@@ -22,6 +22,11 @@
       "enabled": true,
       "label": "Spotify",
       "url": "https://open.spotify.com/show/your-show-id"
+    },
+    "rss": {
+      "enabled": true,
+      "label": "RSS",
+      "url": "https://YOUR-PODCAST-RSS-URL"
     }
   },
   "social": [
@@ -58,6 +63,8 @@
     "notFound": "エピソードが見つかりませんでした。",
     "backToHome": "トップページに戻る",
     "errorLoading": "読み込みに失敗しました。ページを再読み込みしてください。",
+    "rssCopied": "コピーしました",
+    "rssCopyFailed": "コピーに失敗しました",
     "dateFormat": "ja"
   }
 }
