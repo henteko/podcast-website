@@ -50,7 +50,7 @@
               <a href="/" class="hover:opacity-80 transition-opacity">{{site.name}}</a>
             </h1>
           </div>
-          <p id="hero-description" class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-lg"></p>
+          <p id="hero-description" class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-lg whitespace-pre-line"></p>
           <p id="hero-meta" class="text-text-tertiary text-xs font-mono"></p>
 
           <!-- Platform Links -->
@@ -117,6 +117,29 @@
       return div.textContent.replace(/\s+/g, " ").trim();
     }
 
+    function autolinkText(escapedText) {
+      return escapedText.replace(/https?:\/\/[^\s<>"']+/g, (url) => {
+        const trailMatch = url.match(/[)\].,;:!?'"]+$/);
+        let trail = "";
+        if (trailMatch) {
+          trail = trailMatch[0];
+          url = url.slice(0, -trail.length);
+        }
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline underline-offset-2 break-all">${url}</a>${trail}`;
+      });
+    }
+
+    function formatRichText(html) {
+      if (!html) return "";
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      div.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+      div.querySelectorAll("p, div").forEach((el) => el.append("\n\n"));
+      div.querySelectorAll("li").forEach((el) => el.append("\n"));
+      const text = (div.textContent || "").replace(/\n{3,}/g, "\n\n").trim();
+      return autolinkText(escapeHtml(text));
+    }
+
     function formatDate(dateStr) {
       const d = new Date(dateStr);
       if (CONFIG.i18n.dateFormat === "ja") {
@@ -160,7 +183,7 @@
         img.className = "hero-artwork w-40 h-40 sm:w-48 sm:h-48 rounded-2xl object-cover";
         artworkEl.replaceWith(img);
       }
-      document.getElementById("hero-description").textContent = show.description;
+      document.getElementById("hero-description").innerHTML = formatRichText(show.description);
       document.getElementById("hero-meta").textContent = `${CONFIG.i18n.byPrefix} ${show.author} · ${meta.totalEpisodes} ${CONFIG.i18n.episodesUnit}`;
     }
 
@@ -291,7 +314,7 @@
     // --- Episode Detail Page ---
 
     function renderEpisodePage(ep) {
-      const desc = stripHtml(ep.description);
+      const desc = formatRichText(ep.description);
       const appleUrl = ep.platformLinks?.apple || CONFIG.platforms.apple?.url || "#";
       const spotifyUrl = ep.platformLinks?.spotify || CONFIG.platforms.spotify?.url || "#";
 
@@ -319,8 +342,8 @@
                 </span>
               </div>
 
-              <p class="text-sm sm:text-base text-text-secondary leading-relaxed whitespace-pre-line">
-                ${escapeHtml(desc)}
+              <p class="text-sm sm:text-base text-text-secondary leading-relaxed whitespace-pre-line break-words">
+                ${desc}
               </p>
 
               <div class="flex flex-wrap gap-3 pt-2">
