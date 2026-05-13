@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
 import { build } from "../lib/build.js";
 import { init } from "../lib/init.js";
+import { fetchAssets } from "../lib/assets.js";
 import { resolveBin } from "../lib/resolve.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,15 +21,19 @@ Usage:
   podcast-website <command>
 
 Commands:
-  init [dir]   Scaffold a new podcast website project (default: current dir)
-  build        Render templates and compile CSS into ./dist + ./functions
-  dev          Build, watch CSS, and start local Cloudflare Pages dev server
-  deploy       Build and deploy to Cloudflare Pages
-  help         Show this help
+  init [dir]      Scaffold a new podcast website project (default: current dir)
+  assets [url]    Download cover art and generate OGP + favicons in src/static/
+                  (if url omitted, fetches show.imageUrl from api.url)
+  build           Render templates and compile CSS into ./dist + ./functions
+  dev             Build, watch CSS, and start local Cloudflare Pages dev server
+  deploy          Build and deploy to Cloudflare Pages
+  help            Show this help
 
 Examples:
   npx podcast-website init my-podcast
-  cd my-podcast && npm install && npm run dev
+  cd my-podcast && npm install
+  npx podcast-website assets        # generate cover-derived images
+  npm run dev
 `);
 }
 
@@ -41,6 +46,9 @@ async function main() {
           pkgVersion: pkg.version,
           pkgName: pkg.name,
         });
+        return;
+      case "assets":
+        await fetchAssets({ cwd: process.cwd(), urlOverride: rest[0] });
         return;
       case "build":
         build({ pkgRoot, cwd: process.cwd() });

@@ -51,11 +51,27 @@ npm run deploy   # Cloudflare Pages にデプロイ
 ## CLI
 
 ```
-podcast-website init [dir]   新規プロジェクトをスキャフォールド (default: .)
-podcast-website build        ./dist と ./functions を生成
-podcast-website dev          ビルドして Tailwind watch + wrangler pages dev
-podcast-website deploy       ビルドして wrangler pages deploy dist
+podcast-website init [dir]      新規プロジェクトをスキャフォールド (default: .)
+podcast-website assets [url]    アートカバーから OGP 画像 / favicon を生成して src/static/ に配置
+                                (url 省略時は api.url から show.imageUrl を取得)
+podcast-website build           ./dist と ./functions を生成
+podcast-website dev             ビルドして Tailwind watch + wrangler pages dev
+podcast-website deploy          ビルドして wrangler pages deploy dist
 ```
+
+### assets コマンドの出力
+
+`src/static/` に以下を生成 (build で `dist/` 直下にコピーされる):
+
+| ファイル | サイズ | 用途 |
+| --- | --- | --- |
+| `cover.<ext>` | 原寸 | ダウンロードしたアートカバーの原本 |
+| `ogp.png` | 1200×1200 | OGP / Twitter Card 用 |
+| `favicon.png` | 180×180 | apple-touch-icon |
+| `favicon-32.png` | 32×32 | ブラウザタブ |
+
+config の `site.favicon` / `site.favicon32` は最初から `/favicon.png` / `/favicon-32.png` を指しているので
+favicon は config 編集不要。`site.ogImage` だけ自分のデプロイ先 URL + `/ogp.png` に書き換える。
 
 スキャフォールド直後のプロジェクトには `npm run build` / `dev` / `deploy` が `podcast-website` CLI に転送されるよう設定済み。
 
