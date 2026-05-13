@@ -38,7 +38,7 @@ npm install
 
 # 4. podcast.config.json を編集
 #    - api.url に crosspod の URL + ?rss=...&apple_id=... を設定
-#    - 番組名 / プラットフォーム URL / 配色 などを設定
+#    - 番組名 / プラットフォーム URL (Apple / Spotify / RSS) / 配色 などを設定
 $EDITOR podcast.config.json
 
 # 5. アートカバーから OGP 画像 / favicon を生成 (src/static/ に配置)
@@ -162,7 +162,7 @@ npm install
 npm pack
 mkdir -p /tmp/test-podcast && cd /tmp/test-podcast
 node /path/to/podcast-website/bin/cli.js init .
-npm install /path/to/podcast-website/henteko-podcast-website-0.1.0.tgz
+npm install /path/to/podcast-website/henteko-podcast-website-*.tgz
 npm run build
 ```
 
@@ -170,7 +170,22 @@ npm run build
 
 ## 公開
 
-`npm publish` でスコープ付き public パッケージとして公開される (`publishConfig.access = "public"`)。
+`publishConfig.access = "public"` を持つので、`npm publish` でスコープ付き public パッケージとして公開される。
+
+リリース手順:
+
+```sh
+# 作業ツリーをクリーンにしてから:
+npm version patch   # バグ修正:    0.x.y → 0.x.(y+1)
+npm version minor   # 機能追加:    0.x.y → 0.(x+1).0
+npm version major   # 破壊的変更:  0.x.y → (x+1).0.0
+# → package.json を更新 + コミット + git tag (vX.Y.Z) を作成
+
+npm publish
+git push && git push --tags
+```
+
+> 一度公開したバージョン番号は再利用不可。`npm unpublish` は公開後 72 時間以内のみ可能で、それ以降は `npm deprecate` でメッセージを残すしかない。
 
 ## ライセンス
 
