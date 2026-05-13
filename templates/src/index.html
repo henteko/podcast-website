@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="{{site.lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{site.name}}</title>
+  <meta name="description" content="{{site.description}}">
+
+  <!-- OGP -->
+  <meta property="og:title" content="{{site.name}}">
+  <meta property="og:description" content="{{site.description}}">
+  <meta property="og:image" content="{{site.ogImage}}">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{site.name}}">
+  <meta name="twitter:description" content="{{site.description}}">
+  <meta name="twitter:image" content="{{site.ogImage}}">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="{{site.favicon32}}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{site.favicon}}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{{theme.googleFontsHref}}" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="min-h-screen">
+
+  <!-- Hero Section -->
+  <header id="hero" class="relative overflow-hidden">
+    <div class="dot-grid absolute inset-0 opacity-40"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-accent/[0.04] blur-[120px]"></div>
+
+    <div class="relative max-w-4xl mx-auto px-5 pt-16 pb-12 sm:pt-24 sm:pb-16">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-10">
+        <!-- Artwork -->
+        <div class="flex-shrink-0 fade-in">
+          <a href="/">
+            <div id="hero-artwork" class="hero-artwork w-40 h-40 sm:w-48 sm:h-48 rounded-2xl bg-surface-raised animate-pulse"></div>
+          </a>
+        </div>
+
+        <!-- Info -->
+        <div class="flex flex-col items-center sm:items-start text-center sm:text-left gap-4 fade-in-up" style="animation-delay: 0.15s">
+          <div>
+            <p class="font-mono text-xs text-accent tracking-widest uppercase mb-2">{{site.tagline}}</p>
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+              <a href="/" class="hover:opacity-80 transition-opacity">{{site.name}}</a>
+            </h1>
+          </div>
+          <p id="hero-description" class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-lg"></p>
+          <p id="hero-meta" class="text-text-tertiary text-xs font-mono"></p>
+
+          <!-- Platform Links -->
+          <div class="flex flex-wrap justify-center sm:justify-start gap-3 pt-2">
+            <a href="{{platforms.apple.url}}" target="_blank" rel="noopener noreferrer"
+               class="platform-btn platform-btn-apple">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+              {{platforms.apple.label}}
+            </a>
+            <a href="{{platforms.spotify.url}}" target="_blank" rel="noopener noreferrer"
+               class="platform-btn platform-btn-spotify">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.214c3.809-.87 7.076-.496 9.712 1.114a.623.623 0 01.207.857zm1.224-2.719a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.234 1.328a.78.78 0 01.256 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.936.936 0 11-.543-1.791c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.954 1.613z"/></svg>
+              {{platforms.spotify.label}}
+            </a>
+          </div>
+
+          <!-- SNS Links -->
+          <div id="social-links" class="flex justify-center sm:justify-start gap-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glow-line"></div>
+  </header>
+
+  <!-- Main Content (switched by router) -->
+  <main id="main-content" class="max-w-4xl mx-auto px-5 py-12 sm:py-16"></main>
+
+  <!-- Footer -->
+  <footer class="border-t border-border-subtle">
+    <div class="max-w-4xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-text-tertiary text-xs font-mono">
+      <p>&copy; <span id="footer-year"></span> {{site.name}}</p>
+      <div id="footer-links" class="flex gap-4 items-center"></div>
+    </div>
+  </footer>
+
+  <script>
+    const CONFIG = {{config.json}};
+
+    const API_URL = CONFIG.api.url;
+
+    const SVG = {
+      apple: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>',
+      spotify: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.214c3.809-.87 7.076-.496 9.712 1.114a.623.623 0 01.207.857zm1.224-2.719a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.234 1.328a.78.78 0 01.256 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.936.936 0 11-.543-1.791c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.954 1.613z"/></svg>',
+      clock: '<svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd"/></svg>',
+      calendar: '<svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clip-rule="evenodd"/></svg>',
+      back: '<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd"/></svg>',
+      x: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+    };
+
+    let cachedData = null;
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function stripHtml(html) {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent.replace(/\s+/g, " ").trim();
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      if (CONFIG.i18n.dateFormat === "ja") {
+        return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+      }
+      return d.toLocaleDateString(CONFIG.i18n.dateFormat);
+    }
+
+    function formatDuration(dur) {
+      const parts = dur.split(":");
+      if (parts.length === 3) {
+        const h = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10);
+        const s = parseInt(parts[2], 10);
+        if (CONFIG.i18n.dateFormat === "ja") {
+          if (h > 0) return `${h}時間${m}分`;
+          return `${m}分${s}秒`;
+        }
+        if (h > 0) return `${h}h ${m}m`;
+        return `${m}m ${s}s`;
+      }
+      return dur;
+    }
+
+    async function fetchData() {
+      if (cachedData) return cachedData;
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      cachedData = await res.json();
+      return cachedData;
+    }
+
+    function updateHero(show, meta) {
+      const artworkEl = document.getElementById("hero-artwork");
+      if (artworkEl && artworkEl.tagName !== "IMG") {
+        const img = document.createElement("img");
+        img.src = show.imageUrl;
+        img.alt = show.title;
+        img.width = 200;
+        img.height = 200;
+        img.className = "hero-artwork w-40 h-40 sm:w-48 sm:h-48 rounded-2xl object-cover";
+        artworkEl.replaceWith(img);
+      }
+      document.getElementById("hero-description").textContent = show.description;
+      document.getElementById("hero-meta").textContent = `${CONFIG.i18n.byPrefix} ${show.author} · ${meta.totalEpisodes} ${CONFIG.i18n.episodesUnit}`;
+    }
+
+    function renderSocialLinks() {
+      const container = document.getElementById("social-links");
+      if (!container || !CONFIG.social?.length) return;
+      container.innerHTML = CONFIG.social
+        .map((s) => `
+          <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-accent transition-colors"
+             aria-label="${escapeHtml(s.label)}">
+            ${SVG[s.icon] || ""}
+          </a>`)
+        .join("");
+    }
+
+    function renderFooterLinks() {
+      const container = document.getElementById("footer-links");
+      if (!container) return;
+      const parts = [];
+      if (CONFIG.platforms.apple?.enabled !== false && CONFIG.platforms.apple?.url) {
+        parts.push(`<a href="${escapeHtml(CONFIG.platforms.apple.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-text-secondary transition-colors">${escapeHtml(CONFIG.platforms.apple.label)}</a>`);
+      }
+      if (CONFIG.platforms.spotify?.enabled !== false && CONFIG.platforms.spotify?.url) {
+        parts.push(`<a href="${escapeHtml(CONFIG.platforms.spotify.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-text-secondary transition-colors">${escapeHtml(CONFIG.platforms.spotify.label)}</a>`);
+      }
+      if ((CONFIG.social || []).length) {
+        if (parts.length) parts.push(`<span class="text-border-subtle">|</span>`);
+        CONFIG.social.forEach((s) => {
+          parts.push(`<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-text-secondary transition-colors">${escapeHtml(s.label)}</a>`);
+        });
+      }
+      container.innerHTML = parts.join("");
+    }
+
+    // --- List Page ---
+
+    function renderEpisodeCard(ep, index) {
+      const desc = stripHtml(ep.description);
+      const truncated = desc.length > 120 ? desc.slice(0, 120) + "…" : desc;
+      const delay = Math.min(index * 0.08, 0.8);
+      const appleUrl = ep.platformLinks?.apple || CONFIG.platforms.apple?.url || "#";
+      const spotifyUrl = ep.platformLinks?.spotify || CONFIG.platforms.spotify?.url || "#";
+
+      return `
+        <article class="episode-card rounded-xl p-5 sm:p-6 fade-in-up" style="animation-delay: ${delay}s">
+          <div class="flex flex-col gap-3">
+            <h3 class="text-base sm:text-lg font-semibold leading-snug text-text-primary">
+              <a href="/episode/${ep.guid}" class="router-link hover:text-accent transition-colors">${escapeHtml(ep.title)}</a>
+            </h3>
+            <div class="flex items-center gap-4 text-text-tertiary text-xs font-mono">
+              <span class="inline-flex items-center gap-1.5">
+                ${SVG.calendar}
+                ${formatDate(ep.pubDate)}
+              </span>
+              <span class="inline-flex items-center gap-1.5">
+                ${SVG.clock}
+                ${formatDuration(ep.duration)}
+              </span>
+            </div>
+            <p class="text-sm text-text-secondary leading-relaxed">
+              ${escapeHtml(truncated)}
+            </p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <a href="${escapeHtml(appleUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn platform-btn-apple">
+                ${SVG.apple}
+                <span class="hidden sm:inline">${escapeHtml(CONFIG.platforms.apple.label)}</span>
+              </a>
+              <a href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn platform-btn-spotify">
+                ${SVG.spotify}
+                <span class="hidden sm:inline">${escapeHtml(CONFIG.platforms.spotify.label)}</span>
+              </a>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function renderListPage(data) {
+      return `
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="font-display text-2xl sm:text-3xl font-bold">${escapeHtml(CONFIG.i18n.episodesHeading)}</h2>
+          <div class="flex-1 h-px bg-border-subtle"></div>
+          <span class="font-mono text-xs text-text-tertiary">${data.meta.totalEpisodes} ${escapeHtml(CONFIG.i18n.epsSuffix)}</span>
+        </div>
+        <div class="flex flex-col gap-4">
+          ${data.episodes.map((ep, i) => renderEpisodeCard(ep, i)).join("")}
+        </div>`;
+    }
+
+    // --- Episode Detail Page ---
+
+    function renderEpisodePage(ep) {
+      const desc = stripHtml(ep.description);
+      const appleUrl = ep.platformLinks?.apple || CONFIG.platforms.apple?.url || "#";
+      const spotifyUrl = ep.platformLinks?.spotify || CONFIG.platforms.spotify?.url || "#";
+
+      return `
+        <div class="fade-in-up">
+          <a href="/" class="router-link inline-flex items-center gap-2 text-text-secondary hover:text-text-primary text-sm transition-colors mb-8">
+            ${SVG.back}
+            ${escapeHtml(CONFIG.i18n.backToList)}
+          </a>
+
+          <article class="episode-card rounded-xl p-6 sm:p-8">
+            <div class="flex flex-col gap-5">
+              <h2 class="text-xl sm:text-2xl font-bold leading-snug text-text-primary">
+                ${escapeHtml(ep.title)}
+              </h2>
+
+              <div class="flex items-center gap-4 text-text-tertiary text-xs font-mono">
+                <span class="inline-flex items-center gap-1.5">
+                  ${SVG.calendar}
+                  ${formatDate(ep.pubDate)}
+                </span>
+                <span class="inline-flex items-center gap-1.5">
+                  ${SVG.clock}
+                  ${formatDuration(ep.duration)}
+                </span>
+              </div>
+
+              <p class="text-sm sm:text-base text-text-secondary leading-relaxed whitespace-pre-line">
+                ${escapeHtml(desc)}
+              </p>
+
+              <div class="flex flex-wrap gap-3 pt-2">
+                <a href="${escapeHtml(appleUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn platform-btn-apple">
+                  ${SVG.apple}
+                  ${escapeHtml(CONFIG.platforms.apple.label)}
+                </a>
+                <a href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn platform-btn-spotify">
+                  ${SVG.spotify}
+                  ${escapeHtml(CONFIG.platforms.spotify.label)}
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>`;
+    }
+
+    // --- Router ---
+
+    function getRoute() {
+      const path = window.location.pathname;
+      const match = path.match(/^\/episode\/([a-f0-9-]+)$/);
+      if (match) return { page: "episode", guid: match[1] };
+      return { page: "home" };
+    }
+
+    async function render() {
+      const main = document.getElementById("main-content");
+      const route = getRoute();
+
+      try {
+        const data = await fetchData();
+        updateHero(data.show, data.meta);
+
+        if (route.page === "episode") {
+          const ep = data.episodes.find((e) => e.guid === route.guid);
+          if (ep) {
+            document.title = `${ep.title} | ${CONFIG.site.name}`;
+            main.innerHTML = renderEpisodePage(ep);
+          } else {
+            document.title = `${CONFIG.i18n.notFound} | ${CONFIG.site.name}`;
+            main.innerHTML = `
+              <div class="episode-card rounded-xl p-6 text-center fade-in-up">
+                <p class="text-text-secondary mb-4">${escapeHtml(CONFIG.i18n.notFound)}</p>
+                <a href="/" class="router-link text-accent hover:underline">${escapeHtml(CONFIG.i18n.backToHome)}</a>
+              </div>`;
+          }
+        } else {
+          document.title = CONFIG.site.name;
+          main.innerHTML = renderListPage(data);
+        }
+      } catch (err) {
+        main.innerHTML = `
+          <div class="episode-card rounded-xl p-6 text-center">
+            <p class="text-text-secondary">${escapeHtml(CONFIG.i18n.errorLoading)}</p>
+          </div>`;
+        console.error(err);
+      }
+    }
+
+    // SPA navigation
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("a.router-link");
+      if (!link) return;
+      e.preventDefault();
+      const href = link.getAttribute("href");
+      window.history.pushState(null, "", href);
+      window.scrollTo(0, 0);
+      render();
+    });
+
+    window.addEventListener("popstate", () => render());
+
+    document.getElementById("footer-year").textContent = new Date().getFullYear();
+    renderSocialLinks();
+    renderFooterLinks();
+    render();
+  </script>
+
+</body>
+</html>

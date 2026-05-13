@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: {{theme.colorSurface}};
+  --color-surface-raised: {{theme.colorSurfaceRaised}};
+  --color-surface-hover: {{theme.colorSurfaceHover}};
+  --color-border-subtle: {{theme.colorBorderSubtle}};
+  --color-border-accent: {{theme.colorBorderAccent}};
+  --color-accent: {{theme.colorAccent}};
+  --color-accent-dim: {{theme.colorAccentDim}};
+  --color-text-primary: {{theme.colorTextPrimary}};
+  --color-text-secondary: {{theme.colorTextSecondary}};
+  --color-text-tertiary: {{theme.colorTextTertiary}};
+  --font-display: "{{theme.fontDisplay}}", sans-serif;
+  --font-body: "{{theme.fontBody}}", sans-serif;
+  --font-mono: "{{theme.fontMono}}", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-accent),
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  .episode-card {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-subtle);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .episode-card:hover {
+    background: var(--color-surface-raised);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba({{theme.colorTextPrimaryRgb}}, 0.08), 0 0 0 1px rgba({{theme.colorAccentRgb}}, 0.18);
+  }
+
+  .platform-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .platform-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .platform-btn-apple {
+    background: rgba({{theme.colorTextPrimaryRgb}}, 0.06);
+    color: var(--color-text-primary);
+    border: 1px solid rgba({{theme.colorTextPrimaryRgb}}, 0.2);
+  }
+  .platform-btn-apple:hover {
+    background: rgba({{theme.colorTextPrimaryRgb}}, 0.12);
+    border-color: rgba({{theme.colorTextPrimaryRgb}}, 0.4);
+  }
+
+  .platform-btn-spotify {
+    background: rgba({{theme.colorAccentRgb}}, 0.08);
+    color: var(--color-accent);
+    border: 1px solid rgba({{theme.colorAccentRgb}}, 0.25);
+  }
+  .platform-btn-spotify:hover {
+    background: rgba({{theme.colorAccentRgb}}, 0.15);
+    border-color: rgba({{theme.colorAccentRgb}}, 0.45);
+  }
+
+  .hero-artwork {
+    box-shadow:
+      0 0 60px rgba({{theme.colorAccentRgb}}, 0.18),
+      0 20px 48px rgba({{theme.colorTextPrimaryRgb}}, 0.12);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  .ep-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "site": {
+    "lang": "ja",
+    "name": "Your Podcast Name",
+    "tagline": "Podcast",
+    "description": "A short one-line description shown in <meta description> and as a fallback in OGP tags.",
+    "url": "https://your-podcast.example.com",
+    "ogImage": "https://example.com/podcast-cover.jpg",
+    "favicon": "/favicon.png",
+    "favicon32": "/favicon-32.png"
+  },
+  "api": {
+    "url": "https://YOUR-CROSSPOD.workers.dev/api/episodes?rss=https://YOUR-PODCAST-RSS-URL&apple_id=YOUR_APPLE_PODCAST_ID"
+  },
+  "platforms": {
+    "apple": {
+      "enabled": true,
+      "label": "Apple Podcasts",
+      "url": "https://podcasts.apple.com/podcast/id0000000000"
+    },
+    "spotify": {
+      "enabled": true,
+      "label": "Spotify",
+      "url": "https://open.spotify.com/show/your-show-id"
+    }
+  },
+  "social": [
+    {
+      "label": "X",
+      "url": "https://x.com/your_handle",
+      "icon": "x"
+    }
+  ],
+  "theme": {
+    "colorSurface": "#fbfaf5",
+    "colorSurfaceRaised": "#ffffff",
+    "colorSurfaceHover": "#f4f1e8",
+    "colorBorderSubtle": "#e8e3d2",
+    "colorBorderAccent": "#bc002d",
+    "colorAccent": "#bc002d",
+    "colorAccentDim": "#8a0020",
+    "colorTextPrimary": "#171917",
+    "colorTextSecondary": "#4a4744",
+    "colorTextTertiary": "#8a8680",
+    "colorAccentRgb": "188, 0, 45",
+    "colorTextPrimaryRgb": "23, 25, 23",
+    "fontDisplay": "Noto Sans JP",
+    "fontBody": "Noto Sans JP",
+    "fontMono": "IBM Plex Mono",
+    "googleFontsHref": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"
+  },
+  "i18n": {
+    "episodesHeading": "Episodes",
+    "epsSuffix": "eps",
+    "byPrefix": "by",
+    "episodesUnit": "episodes",
+    "backToList": "エピソード一覧に戻る",
+    "notFound": "エピソードが見つかりませんでした。",
+    "backToHome": "トップページに戻る",
+    "errorLoading": "読み込みに失敗しました。ページを再読み込みしてください。",
+    "dateFormat": "ja"
+  }
+}

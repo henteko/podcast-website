@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #fbfaf5;
+  --color-surface-raised: #ffffff;
+  --color-surface-hover: #f4f1e8;
+  --color-border-subtle: #e8e3d2;
+  --color-border-accent: #bc002d;
+  --color-accent: #bc002d;
+  --color-accent-dim: #8a0020;
+  --color-text-primary: #171917;
+  --color-text-secondary: #4a4744;
+  --color-text-tertiary: #8a8680;
+  --font-display: "Noto Sans JP", sans-serif;
+  --font-body: "Noto Sans JP", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-accent),
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  .episode-card {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border-subtle);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .episode-card:hover {
+    background: var(--color-surface-raised);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(23, 25, 23, 0.08), 0 0 0 1px rgba(188, 0, 45, 0.18);
+  }
+
+  .platform-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .platform-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .platform-btn-apple {
+    background: rgba(23, 25, 23, 0.06);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(23, 25, 23, 0.2);
+  }
+  .platform-btn-apple:hover {
+    background: rgba(23, 25, 23, 0.12);
+    border-color: rgba(23, 25, 23, 0.4);
+  }
+
+  .platform-btn-spotify {
+    background: rgba(188, 0, 45, 0.08);
+    color: var(--color-accent);
+    border: 1px solid rgba(188, 0, 45, 0.25);
+  }
+  .platform-btn-spotify:hover {
+    background: rgba(188, 0, 45, 0.15);
+    border-color: rgba(188, 0, 45, 0.45);
+  }
+
+  .hero-artwork {
+    box-shadow:
+      0 0 60px rgba(188, 0, 45, 0.18),
+      0 20px 48px rgba(23, 25, 23, 0.12);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  .ep-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

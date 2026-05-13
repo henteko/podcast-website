@@ -1,0 +1,42 @@
+{
+  "name": "@henteko/podcast-website",
+  "version": "0.1.0",
+  "description": "Generic, config-driven podcast website starter (HTML + TailwindCSS + Cloudflare Pages).",
+  "license": "Apache-2.0",
+  "author": "henteko",
+  "type": "module",
+  "bin": {
+    "podcast-website": "bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "templates",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "podcast",
+    "cloudflare-pages",
+    "tailwindcss",
+    "static-site",
+    "rss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henteko/podcast-website.git"
+  },
+  "homepage": "https://github.com/henteko/podcast-website#readme",
+  "bugs": {
+    "url": "https://github.com/henteko/podcast-website/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4",
+    "wrangler": "^4.88.0"
+  }
+}
