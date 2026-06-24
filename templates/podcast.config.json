@@ -36,6 +36,11 @@
       "icon": "x"
     }
   ],
+  "letter": {
+    "enabled": true,
+    "label": "お便り",
+    "url": "https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
+  },
   "theme": {
     "colorSurface": "#fbfaf5",
     "colorSurfaceRaised": "#ffffff",
