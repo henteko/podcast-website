@@ -129,21 +129,27 @@
       });
     }
 
-    function formatRichText(html) {
-      if (!html) return "";
+    // A "footer" in the show notes is a trailing block introduced by a separator
+    // line (e.g. "─────"). Other podcast clients render it as a natural footer
+    // with links; on this site we parse it for metadata (YouTube) and hide it,
+    // since the page already shows its own player and platform buttons.
+    const FOOTER_SEPARATOR_RE = /^[\s\-—―─=*_·・•]{3,}$/;
+
+    function htmlToLines(html) {
       const div = document.createElement("div");
       div.innerHTML = html;
       div.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
-      // Mark real list items so they flow through the bullet-detection path below.
+      // Mark real list items so they flow through the bullet-detection path.
       div.querySelectorAll("li").forEach((el) => el.prepend("- "));
       // Force a line break after every block element so blocks become lines.
       div.querySelectorAll("p, div, li").forEach((el) => el.append("\n"));
-
-      const lines = (div.textContent || "")
+      return (div.textContent || "")
         .split("\n")
         .map((l) => l.trim())
         .filter(Boolean);
+    }
 
+    function linesToHtml(lines) {
       const out = [];
       let list = null;
       const flushList = () => {
@@ -167,6 +173,30 @@
       }
       flushList();
       return out.join("");
+    }
+
+    function formatRichText(html) {
+      if (!html) return "";
+      return linesToHtml(htmlToLines(html));
+    }
+
+    // Render the show-note body, dropping the trailing footer block (everything
+    // from the first separator line onward) so it isn't duplicated on this site.
+    function formatEpisodeBody(html) {
+      if (!html) return "";
+      let lines = htmlToLines(html);
+      const sep = lines.findIndex((l) => FOOTER_SEPARATOR_RE.test(l));
+      if (sep !== -1) lines = lines.slice(0, sep);
+      return linesToHtml(lines);
+    }
+
+    // Find the first YouTube video id referenced anywhere in the text.
+    function extractYouTubeId(text) {
+      if (!text) return null;
+      const m = text.match(
+        /(?:youtube\.com\/(?:watch\?(?:[^"'\s<>]*&)?v=|embed\/|live\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i
+      );
+      return m ? m[1] : null;
     }
 
     function formatDate(dateStr) {
@@ -343,9 +373,19 @@
     // --- Episode Detail Page ---
 
     function renderEpisodePage(ep) {
-      const desc = formatRichText(ep.description);
+      const desc = formatEpisodeBody(ep.description);
+      const videoId = extractYouTubeId(ep.description);
       const appleUrl = ep.platformLinks?.apple || CONFIG.platforms.apple?.url || "#";
       const spotifyUrl = ep.platformLinks?.spotify || CONFIG.platforms.spotify?.url || "#";
+
+      const videoEmbed = videoId
+        ? `<div class="aspect-video w-full overflow-hidden rounded-lg bg-black">
+                <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${videoId}"
+                  title="${escapeHtml(ep.title)}" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>`
+        : "";
 
       return `
         <div class="fade-in-up">
@@ -356,6 +396,7 @@
 
           <article class="episode-card rounded-xl p-6 sm:p-8">
             <div class="flex flex-col gap-5">
+              ${videoEmbed}
               <h2 class="text-xl sm:text-2xl font-bold leading-snug text-text-primary">
                 ${escapeHtml(ep.title)}
               </h2>
