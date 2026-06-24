@@ -133,6 +133,24 @@
     color: var(--color-accent);
     letter-spacing: 0.05em;
   }
+
+  .rich-text > :first-child {
+    margin-top: 0;
+  }
+  .rich-text > :last-child {
+    margin-bottom: 0;
+  }
+  .rich-text p {
+    margin: 0.75em 0;
+  }
+  .rich-text ul {
+    list-style: disc;
+    padding-left: 1.4em;
+    margin: 0.75em 0;
+  }
+  .rich-text li {
+    margin: 0.25em 0;
+  }
 }
 
 @keyframes fadeIn {

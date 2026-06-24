@@ -50,7 +50,7 @@
               <a href="/" class="hover:opacity-80 transition-opacity">{{site.name}}</a>
             </h1>
           </div>
-          <p id="hero-description" class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-lg whitespace-pre-line"></p>
+          <div id="hero-description" class="rich-text text-text-secondary text-sm sm:text-base leading-relaxed max-w-lg"></div>
           <p id="hero-meta" class="text-text-tertiary text-xs font-mono"></p>
 
           <!-- Platform Links -->
@@ -134,10 +134,39 @@
       const div = document.createElement("div");
       div.innerHTML = html;
       div.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
-      div.querySelectorAll("p, div").forEach((el) => el.append("\n\n"));
-      div.querySelectorAll("li").forEach((el) => el.append("\n"));
-      const text = (div.textContent || "").replace(/\n{3,}/g, "\n\n").trim();
-      return autolinkText(escapeHtml(text));
+      // Mark real list items so they flow through the bullet-detection path below.
+      div.querySelectorAll("li").forEach((el) => el.prepend("- "));
+      // Force a line break after every block element so blocks become lines.
+      div.querySelectorAll("p, div, li").forEach((el) => el.append("\n"));
+
+      const lines = (div.textContent || "")
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean);
+
+      const out = [];
+      let list = null;
+      const flushList = () => {
+        if (list) {
+          out.push(
+            `<ul>${list
+              .map((t) => `<li>${autolinkText(escapeHtml(t))}</li>`)
+              .join("")}</ul>`
+          );
+          list = null;
+        }
+      };
+      for (const line of lines) {
+        const bullet = line.match(/^[-*・•]\s+(.+)$/);
+        if (bullet) {
+          (list || (list = [])).push(bullet[1]);
+        } else {
+          flushList();
+          out.push(`<p>${autolinkText(escapeHtml(line))}</p>`);
+        }
+      }
+      flushList();
+      return out.join("");
     }
 
     function formatDate(dateStr) {
@@ -342,9 +371,7 @@
                 </span>
               </div>
 
-              <p class="text-sm sm:text-base text-text-secondary leading-relaxed whitespace-pre-line break-words">
-                ${desc}
-              </p>
+              <div class="rich-text text-sm sm:text-base text-text-secondary leading-relaxed break-words">${desc}</div>
 
               <div class="flex flex-wrap gap-3 pt-2">
                 <a href="${escapeHtml(appleUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn platform-btn-apple">
